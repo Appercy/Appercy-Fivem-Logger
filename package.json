@@ -1,0 +1,28 @@
+{
+  "name": "fivem-logging",
+  "version": "1.0.0",
+  "description": "FiveM logging web application with admin dashboard",
+  "module": "src/index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "start": "bun run src/index.ts",
+    "start:node": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@fastify/static": "^7.0.4",
+    "bcrypt": "^5.1.1",
+    "fastify": "^4.28.1",
+    "mysql2": "^3.11.3",
+    "pino-pretty": "^13.1.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/bun": "latest",
+    "tsx": "^4.20.6"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

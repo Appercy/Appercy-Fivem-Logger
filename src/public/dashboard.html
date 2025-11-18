@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FiveM Logging</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/theme.js"></script>
+    <script src="/js/locale.js"></script>
+</head>
+<body>
+    <script>initTheme();</script>
+    <div class="dashboard">
+        <header>
+            <h1 data-i18n="dashboard">FiveM Logging Dashboard</h1>
+            <div class="header-actions">
+                <select id="localeSelector" class="locale-selector" onchange="setLocale(this.value)">
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                </select>
+                <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <span id="username"></span>
+                <button id="adminBtn" class="btn btn-primary" style="display:none;" data-i18n="adminPanel">Admin Panel</button>
+                <button id="logoutBtn" class="btn btn-secondary" data-i18n="logout">Logout</button>
+            </div>
+        </header>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="filterType" data-i18n="type">Type:</label>
+                <select id="filterType">
+                    <option value="" data-i18n="all">All</option>
+                    <option value="discord">Discord</option>
+                    <option value="fivem">FiveM</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filterLevel" data-i18n="level">Level:</label>
+                <input type="text" id="filterLevel" placeholder="info, warn, error...">
+            </div>
+
+            <div class="filter-group">
+                <label for="filterResource" data-i18n="resource">Resource:</label>
+                <input type="text" id="filterResource" placeholder="esx, qb-core...">
+            </div>
+
+            <div class="filter-group">
+                <label for="filterSearch" data-i18n="search">Search:</label>
+                <input type="text" id="filterSearch" placeholder="identifier, message...">
+            </div>
+
+            <div class="filter-group">
+                <label for="filterStartDate" data-i18n="startDate">Start Date:</label>
+                <input type="datetime-local" id="filterStartDate">
+            </div>
+
+            <div class="filter-group">
+                <label for="filterEndDate" data-i18n="endDate">End Date:</label>
+                <input type="datetime-local" id="filterEndDate">
+            </div>
+
+            <div class="filter-group">
+                <button id="applyFilters" class="btn btn-primary" data-i18n="applyFilters">Apply Filters</button>
+                <button id="clearFilters" class="btn btn-secondary" data-i18n="clear">Clear</button>
+            </div>
+        </div>
+
+        <div class="logs-container">
+            <div class="logs-header">
+                <h2 data-i18n="logs">Logs</h2>
+                <div>
+                    <button id="deleteSelectedBtn" class="btn btn-danger" style="display:none;" data-i18n="deleteSelected">Delete Selected</button>
+                    <button id="refreshLogs" class="btn btn-secondary" data-i18n="refresh">Refresh</button>
+                </div>
+            </div>
+            
+            <div id="logsTable" class="logs-table">
+                <div class="loading" data-i18n="loading">Loading logs...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metadata Modal -->
+    <div id="metadataModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="metadata">Metadata</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div id="metadataContent" style="padding: 20px;">
+                <pre style="background: var(--code-bg); padding: 15px; border-radius: 5px; overflow-x: auto; max-height: 500px;"></pre>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary close-modal" data-i18n="close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

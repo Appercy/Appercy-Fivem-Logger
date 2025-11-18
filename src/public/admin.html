@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - FiveM Logging</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/theme.js"></script>
+    <script src="/js/locale.js"></script>
+</head>
+<body>
+    <script>initTheme();</script>
+    <div class="dashboard">
+        <header>
+            <h1 data-i18n="adminPanel">Admin Panel</h1>
+            <div class="header-actions">
+                <select id="localeSelector" class="locale-selector" onchange="setLocale(this.value)">
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                </select>
+                <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <span id="username"></span>
+                <button id="dashboardBtn" class="btn btn-secondary" data-i18n="dashboard">Dashboard</button>
+                <button id="logoutBtn" class="btn btn-secondary" data-i18n="logout">Logout</button>
+            </div>
+        </header>
+
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="webhooks" data-i18n="webhooks">Webhooks</button>
+            <button class="tab-btn" data-tab="users" data-i18n="users">Users</button>
+        </div>
+
+        <!-- Webhooks Tab -->
+        <div id="webhooks" class="tab-content active">
+            <div class="section-header">
+                <h2 data-i18n="webhookUsage">Webhook Usage Guide</h2>
+            </div>
+
+            <div class="info-box">
+                <h3 data-i18n="howToSendLogs">How to Send Logs</h3>
+                <p data-i18n="webhookDescription">Send logs directly to these endpoints without configuration. The system automatically filters and categorizes logs based on the URL and metadata.</p>
+            </div>
+
+            <div class="webhook-endpoints">
+                <div class="endpoint-card">
+                    <h4>📢 <span data-i18n="discordWebhooks">Discord Webhooks</span></h4>
+                    <p data-i18n="discordWebhookDesc">Send logs directly to your Discord webhook URL and optionally filter by resource/level:</p>
+                    <div class="code-block">
+                        <strong data-i18n="basic">Basic:</strong><br>
+                        <code>POST http://your-domain:4000/api/webhook/discord</code><br><br>
+                        <strong data-i18n="withResourceFilter">With Resource Filter:</strong><br>
+                        <code>POST http://your-domain:4000/api/webhook/discord/esx</code><br><br>
+                        <strong data-i18n="withResourceLevelFilter">With Resource + Level Filter:</strong><br>
+                        <code>POST http://your-domain:4000/api/webhook/discord/esx/info</code>
+                    </div>
+                    <p class="hint"><span data-i18n="example">Example:</span> <code>http://202.61.198.41:4000/api/webhook/discord/qb-core/error</code></p>
+                    <p class="hint" data-i18n="supportsMediaDiscord">Supports images, videos, and embeds from Discord attachments</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <h4>🎮 <span data-i18n="fivemLogs">FiveM Logs</span></h4>
+                    <p data-i18n="fivemLogsDesc">Send FiveM logs with automatic metadata filtering:</p>
+                    <div class="code-block">
+                        <code>POST http://your-domain:4000/api/webhook/fivem</code>
+                    </div>
+                    <p class="hint" data-i18n="includeMetadata">Include metadata in your payload:</p>
+                    <pre style="background: var(--code-bg); padding: 10px; border-radius: 5px; font-size: 12px;">{
+  "message": "Player connected",
+  "level": "info",
+  "resource": "es_extended",
+  "metadata": {
+    "player": "John Doe",
+    "identifier": "steam:110000112345678"
+  }
+}</pre>
+                    <p class="hint" data-i18n="autoExtractsMetadata">The system automatically extracts resource and level from your metadata</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <h4>🔧 <span data-i18n="customEndpoints">Custom Endpoints</span></h4>
+                    <p data-i18n="customEndpointsDesc">Create custom filtered endpoints for specific resources:</p>
+                    <div class="code-block">
+                        <strong data-i18n="resourceFilter">Resource Filter:</strong><br>
+                        <code>POST http://your-domain:4000/api/webhook/custom/yourresource</code><br><br>
+                        <strong data-i18n="resourceLevelFilter">Resource + Level Filter:</strong><br>
+                        <code>POST http://your-domain:4000/api/webhook/custom/yourresource/warn</code>
+                    </div>
+                    <p class="hint"><span data-i18n="examples">Examples:</span> <code>/custom/banking</code>, <code>/custom/inventory/error</code></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users" class="tab-content">
+            <div class="section-header">
+                <h2 data-i18n="userManagement">User Management</h2>
+                <button id="addUserBtn" class="btn btn-primary" data-i18n="addUser">Add User</button>
+            </div>
+
+            <div id="usersTable" class="data-table">
+                <div class="loading">Loading users...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="addUserTitle">Add User</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="newUsername" data-i18n="newUsername">Username:</label>
+                    <input type="text" id="newUsername" required placeholder="username">
+                </div>
+                <div class="form-group">
+                    <label for="newPassword" data-i18n="newPassword">Password:</label>
+                    <input type="password" id="newPassword" required placeholder="Min 8 characters">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="newUserAdmin">
+                        <span data-i18n="admin">Admin</span>
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary" data-i18n="createUser">Create User</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-i18n="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div id="resetPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="resetPasswordTitle">Reset Password</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="resetPasswordForm">
+                <input type="hidden" id="resetUserId">
+                <p><span data-i18n="resetPasswordFor">Reset password for:</span> <strong id="resetUsername"></strong></p>
+                <div class="form-group">
+                    <label for="resetPassword" data-i18n="newPassword">New Password:</label>
+                    <input type="password" id="resetPassword" required placeholder="Min 8 characters">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary" data-i18n="resetPasswordBtn">Reset Password</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-i18n="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

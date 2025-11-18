@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FiveM Logging</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/theme.js"></script>
+    <script src="/js/locale.js"></script>
+</head>
+<body>
+    <script>initTheme();</script>
+    <div class="container">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 data-i18n="loginTitle">Admin Login</h1>
+                <div style="display: flex; gap: 10px;">
+                    <select id="localeSelector" class="locale-selector" onchange="setLocale(this.value)" style="width: auto;">
+                        <option value="en">EN</option>
+                        <option value="de">DE</option>
+                    </select>
+                    <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()" style="width: auto;">🌙</button>
+                </div>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username" data-i18n="username">Username</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" data-i18n="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" data-i18n="login">Login</button>
+            </form>
+            
+            <div id="message" class="message"></div>
+        </div>
+    </div>
+
+    <script src="/js/login.js"></script>
+</body>
+</html>
