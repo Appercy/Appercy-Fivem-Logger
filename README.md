@@ -4,12 +4,10 @@ A comprehensive web-based logging solution for FiveM servers with Discord integr
 
 ## 🌟 Features
 
-- 🚀 **Fast Performance** - Built with Bun runtime
 - 🔐 **Secure Authentication** - Session-based auth with bcrypt password hashing
 - 📊 **Advanced Filtering** - Filter by type, level, resource, search text, and date range
 - 🔗 **Multiple Webhooks** - Discord, FiveM, and custom webhook endpoints
 - 💾 **MySQL Database** - Persistent storage with efficient indexing
-- 🎨 **Modern UI** - Responsive design with dark mode support
 - 🌍 **Multi-Language** - English and German (easily extendable)
 - 🗑️ **Log Management** - Single and bulk delete with admin permissions
 - 📸 **Media Support** - Display images, videos, and files from Discord
@@ -36,8 +34,8 @@ A comprehensive web-based logging solution for FiveM servers with Discord integr
 
 1. **Clone the repository:**
 ```bash
-git clone <repository-url>
-cd fivem-logging-copilot-add-webapp-with-logging
+git clone https://github.com/Appercy/Appercy-Fivem-Logger/
+cd Appercy-Fivem-Logger
 ```
 
 2. **(Optional) Configure settings:**
@@ -222,8 +220,8 @@ EXIT;
 
 4. **Clone and configure:**
 ```bash
-git clone <repository-url>
-cd fivem-logging-copilot-add-webapp-with-logging
+git clone https://github.com/Appercy/Appercy-Fivem-Logger/
+cd Appercy-Fivem-Logger
 
 # Create environment file
 cat > .env << EOF
@@ -275,20 +273,6 @@ pm2 save
 3. Enter password (minimum 8 characters)
 4. Click "Create Account"
 5. Login at `http://localhost:4000/login.html`
-
-### CLI Setup (Non-Docker only)
-If `SKIP_CLI_SETUP=false` in your environment:
-1. Start the application
-2. Follow the terminal prompts:
-   ```
-   ========================================
-   First Run Setup - Create Admin Account
-   ========================================
-   
-   Enter admin username: admin
-   Enter admin password: ********
-   ```
-
 ---
 
 ## 🎮 FiveM Integration
@@ -428,11 +412,7 @@ POST http://your-server:4000/api/webhook/custom/esx/warn
 POST http://your-server:4000/api/webhook/custom/qbcore/error
 ```
 
-**Creating custom paths:**
-1. Login as admin
-2. Go to Admin Panel
-3. Click "Add Webhook"
-4. Enter custom path (e.g., "esx" for `/api/webhook/custom/esx`)
+Custom Paths will always work and exist,
 
 ---
 
@@ -486,17 +466,6 @@ Change language using the dropdown in the header. Preference is saved to localSt
 - **Filters**: Type, Level, Resource, Search, Date Range
 - **Search**: Searches in message text and metadata
 
-### Deleting Logs (Admin Only)
-
-**Single Delete:**
-1. Click "Delete" button next to any log
-2. Confirm deletion
-
-**Bulk Delete:**
-1. Check boxes next to logs you want to delete
-2. Click "Delete Selected (X)" button
-3. Confirm deletion
-
 ---
 
 ## 🔄 Resetting the System
@@ -530,31 +499,6 @@ After reset, visit `/setup.html` to create a new admin account.
 
 ---
 
-## 👥 User Management (Admin Only)
-
-### Create User
-1. Login as admin
-2. Go to Admin Panel
-3. Click "Add User"
-4. Enter username and password
-5. Select role (Admin or User)
-
-### Reset Password
-1. Go to Admin Panel → Users
-2. Click "Reset Password" next to user
-3. Enter new password
-4. Confirm
-
-### Delete User
-1. Go to Admin Panel → Users
-2. Click "Delete" next to user
-3. Confirm deletion
-
-**Note:** Users can view logs, admins can manage users, webhooks, and delete logs.
-
----
-
-## 🛠️ Development
 
 ### Project Structure
 ```
@@ -620,38 +564,6 @@ docker exec -i fivem-logging-mysql mysql -u root -p fivem_logging < backup.sql
 
 ---
 
-## 🐛 Troubleshooting
-
-### Container won't start
-```bash
-docker compose logs
-docker compose down
-docker compose up -d --build
-```
-
-### Can't access web interface
-- Check firewall settings
-- Verify port 4000 is not in use: `docker ps`
-- Check if app is running: `docker compose ps`
-
-### Database connection errors
-- Wait 10-15 seconds after starting (MySQL needs time)
-- Check logs: `docker compose logs mysql`
-- Verify credentials in `docker-compose.yml`
-
-### Webhooks not working
-- Verify URL is correct
-- Check payload format matches examples
-- View logs: `docker compose logs app`
-- Test with curl (see examples above)
-
-### Logs not appearing
-- Check filters (clear all filters)
-- Verify webhook sent successfully (200 response)
-- Check database: `docker exec -it fivem-logging-mysql mysql -u root -p -e "SELECT COUNT(*) FROM fivem_logging.logs;"`
-
----
-
 ## 📝 API Documentation
 
 ### Authentication
@@ -713,18 +625,6 @@ Response:
 
 ---
 
-## 🔒 Security
-
-- ✅ Bcrypt password hashing (10 rounds)
-- ✅ Session-based authentication
-- ✅ Admin-only route protection
-- ✅ SQL injection prevention (parameterized queries)
-- ✅ XSS protection (HTML escaping)
-- ⚠️ **Change default MySQL password in production!**
-- ⚠️ **Use HTTPS in production (reverse proxy)**
-
----
-
 ## 📄 License
 
 Open source - modify as needed for your server.
@@ -733,16 +633,13 @@ Open source - modify as needed for your server.
 
 ## 🤝 Contributing
 
-Contributions welcome! Fork, create feature branch, and submit PR.
+Contributions are welcome! Fork, create feature branch, and submit PR.
 
 ---
 
 ## 📞 Support
 
 - **Issues**: Open a GitHub issue
-- **Docs**: See README and fivem-resource/README.md
-- **Tests**: All features tested ✅
-
 ---
 
 **Built with:** Bun • Fastify • MySQL • Docker • TypeScript
