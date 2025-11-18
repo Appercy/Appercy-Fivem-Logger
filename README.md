@@ -117,7 +117,7 @@ install.bat
 bun run src/index.ts
 ```
 
-#### Linux/Mac Users
+#### Linux Users
 
 1. **Download the project** and open terminal in the project folder
 
@@ -139,7 +139,7 @@ If you prefer to install manually or the automatic script doesn't work:
 
 1. **Install Bun:**
 ```bash
-# Linux/macOS
+# Linux
 curl -fsSL https://bun.sh/install | bash
 
 # Windows (PowerShell)
@@ -151,8 +151,6 @@ powershell -c "irm bun.sh/install.ps1 | iex"
 # Ubuntu/Debian
 sudo apt update && sudo apt install mysql-server
 
-# macOS
-brew install mysql
 
 # Windows: Download from https://dev.mysql.com/downloads/
 ```
@@ -472,7 +470,7 @@ Change language using the dropdown in the header. Preference is saved to localSt
 
 To completely reset and start fresh:
 
-### Linux/macOS:
+### Linux:
 ```bash
 ./reset.sh
 ```
